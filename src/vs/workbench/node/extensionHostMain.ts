@@ -17,6 +17,7 @@ import pkg from 'vs/platform/package';
 import {IExtensionDescription} from 'vs/platform/extensions/common/extensions';
 import {ExtensionsRegistry} from 'vs/platform/extensions/common/extensionsRegistry';
 import {ExtHostAPIImplementation, defineAPI} from 'vs/workbench/api/node/extHost.api.impl';
+import {registerExtensionHostProfilingCommand} from 'vs/workbench/api/node/extHostProfiler';
 import {IMainProcessExtHostIPC} from 'vs/platform/extensions/common/ipcRemoteCom';
 import {ExtHostExtensionService} from 'vs/workbench/api/node/extHostExtensionService';
 import {ExtHostThreadService} from 'vs/workbench/services/thread/common/extHostThreadService';
@@ -90,7 +91,11 @@ export class ExtensionHostMain {
 		}
 
 		// Create the ext host API
-		defineAPI(new ExtHostAPIImplementation(threadService, this._extensionService, this._contextService, telemetryService));
+		const apiImpl = new ExtHostAPIImplementation(threadService, this._extensionService, this._contextService, telemetryService);
+		defineAPI(apiImpl);
+
+		// Ext host diagnose tools
+		registerExtensionHostProfilingCommand(apiImpl);
 	}
 
 	private _getOrCreateWorkspaceStoragePath(): string {
