@@ -7,7 +7,7 @@
 
 import {Registry} from 'vs/platform/platform';
 import nls = require('vs/nls');
-import {SyncActionDescriptor} from 'vs/platform/actions/common/actions';
+import {SyncActionDescriptor, MenuRegistry} from 'vs/platform/actions/common/actions';
 import {IConfigurationRegistry, Extensions as ConfigurationExtensions} from 'vs/platform/configuration/common/configurationRegistry';
 import {IWorkbenchActionRegistry, Extensions} from 'vs/workbench/common/actionRegistry';
 import {KeyMod, KeyCode} from 'vs/base/common/keyCodes';
@@ -30,6 +30,7 @@ workbenchActionsRegistry.registerWorkbenchAction(new SyncActionDescriptor(CloseW
 workbenchActionsRegistry.registerWorkbenchAction(new SyncActionDescriptor(CloseFolderAction, CloseFolderAction.ID, CloseFolderAction.LABEL, { primary: KeyMod.chord(KeyMod.CtrlCmd | KeyCode.KEY_K, KeyCode.KEY_F) }), 'File: Close Folder', fileCategory);
 workbenchActionsRegistry.registerWorkbenchAction(new SyncActionDescriptor(OpenRecentAction, OpenRecentAction.ID, OpenRecentAction.LABEL, { primary: KeyMod.CtrlCmd | KeyCode.KEY_R, mac: { primary: KeyMod.WinCtrl | KeyCode.KEY_R } }), 'File: Open Recent', fileCategory);
 workbenchActionsRegistry.registerWorkbenchAction(new SyncActionDescriptor(ToggleDevToolsAction, ToggleDevToolsAction.ID, ToggleDevToolsAction.LABEL), 'Developer: Toggle Developer Tools', developerCategory);
+MenuRegistry.addCommand({ id: '_dev.profileExtensionHost', title: nls.localize('profLabel', "Start Extension Host Profiling"), category: developerCategory });
 workbenchActionsRegistry.registerWorkbenchAction(new SyncActionDescriptor(ZoomInAction, ZoomInAction.ID, ZoomInAction.LABEL, { primary: KeyMod.CtrlCmd | KeyCode.US_EQUAL, secondary: [KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.US_EQUAL] }), 'View: Zoom In', viewCategory);
 workbenchActionsRegistry.registerWorkbenchAction(
 	new SyncActionDescriptor(ZoomOutAction, ZoomOutAction.ID, ZoomOutAction.LABEL, {
